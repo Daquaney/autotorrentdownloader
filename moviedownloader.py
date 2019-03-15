@@ -2,7 +2,7 @@
 import feedparser
 import transmissionrpc
 url = 'https://thepiratebay.org/rss/top100/207'
-tc = transmissionrpc.Client('192.168.1.91', port=9091)
+tc = transmissionrpc.Client('IP HERE!!', port=9091)
 
 
 def link_in_db(link_db):
