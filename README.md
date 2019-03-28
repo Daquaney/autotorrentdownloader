@@ -1,4 +1,4 @@
-# pyautotorrentdownloader
+# autotorrentdownloader
 A python automated torrent downloader.
 # about
 Automatically download endless free movies from an rss feed and filter out the movies you have downloaded from the ones you don't.
