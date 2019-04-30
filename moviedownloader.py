@@ -1,39 +1,37 @@
 # made by tristan edwards
 import feedparser
 import transmissionrpc
+# rss feed
 url = 'https://thepiratebay.org/rss/top100/207'
-tc = transmissionrpc.Client('IP HERE!!', port=9091)
+# transmission client setup
+tc = transmissionrpc.Client('localhost', port=9091)
 
-
-def link_in_db(link_db):
-    with open('magnets.txt', 'r') as database:
+# to check if magnet is in the database of magnets
+def magnet_in_db(magnet):
+    with open('magnets.txt', 'r+') as database:
         for line in database:
-            if link_db in line:
+            if magnet in line:
                 return True
     return False
 
 
 feed = feedparser.parse(url)
-links_to_grab = []
-links_to_skip = []
-
-for link in feed.entries:
-    link = link.link
-    if link_in_db(link):
-        links_to_skip.append(link)
+magnets_to_print = []
+magnets_to_skip = []
+# if magnet already exists in database do nothing, otherwise add the magnet to the database
+for magnet in feed.entries:
+    magnet = magnet.link
+    if magnet_in_db(magnet):
+        magnets_to_skip.append(magnet)
     else:
-        links_to_grab.append(link)
-
-link_file = open('magnets.txt', 'a')
-for link in links_to_grab:
-    if not link_in_db(link):
-        if '720p' in link:
+        magnets_to_print.append(magnet)
+# write to the database
+magnet_file = open('magnets.txt', 'a+')
+for magnet in magnets_to_print:
+    if not magnet_in_db(magnet):
+        if '720p' in magnet:
             continue
-        link_file.write(link + "\n")
-link_file.close()
-
-for link in links_to_grab:
-    if '720p' in link:
-        continue
-    print(link)
-    tc.add_torrent(link)
+        magnet_file.write(magnet + "\n")
+        print(magnet)
+        tc.add_torrent(magnet)
+magnet_file.close()
