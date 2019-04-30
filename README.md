@@ -10,10 +10,10 @@ git clone https://github.com/Daquaney/autotorrentdownloader
 ```
 3. Install requirements
 ```
+cd autotorrentdownloader
 pip install -r requirements.txt
 ```
 # Running the project
 ```
-cd autotorrentdownloader
 python moviedownloader.py
 ```
